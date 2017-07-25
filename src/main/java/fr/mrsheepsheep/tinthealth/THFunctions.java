@@ -128,6 +128,10 @@ public class THFunctions {
 			distance.invoke(worldborder, dist);
 			time.invoke(worldborder, 15);
 			movement.invoke(worldborder, oldradius, newradius, delay);
+
+			Method worldServer = getClass("org.bukkit.craftbukkit", "CraftWorld").getMethod("getHandle", (Class<?>[]) new Class[0]);
+			Field world = getClass("net.minecraft.server", "WorldBorder").getField("world");
+			world.set(worldborder, worldServer.invoke(p.getWorld()));
 			
 			Object packet = constructor.newInstance(worldborder, constant);
 			sendPacket.invoke(player_connection.get(handle.invoke(p)), packet);
